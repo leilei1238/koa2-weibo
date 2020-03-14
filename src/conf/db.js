@@ -1,7 +1,7 @@
 /**
  *@description 数据库配置文件
  */
-const { isDev } = require('../utils/env')
+const { isProd } = require('../utils/env')
 let REDIS_CONF = {
   host: '127.0.0.1',
   port: 6379
@@ -14,7 +14,7 @@ let MYSQL_CONF = {
   password: '123456'
 }
 
-if (isDev) {
+if (isProd) {
   //线上环境 redis配置
   REDIS_CONF = {
     host: '127.0.0.1',

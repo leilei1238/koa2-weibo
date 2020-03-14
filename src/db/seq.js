@@ -3,7 +3,7 @@
  */
 const Sequelize = require('sequelize')
 const { MYSQL_CONF } = require('../conf/db')
-const { isDev, isTest } = require('../utils/env')
+const { isProd, isTest } = require('../utils/env')
 const { database, user, password } = MYSQL_CONF
 
 const conf = {
@@ -11,7 +11,7 @@ const conf = {
   dialect: 'mysql'
 }
 //线上环境：使用连接池
-if (isDev) {
+if (isProd) {
   conf.pool = {
     max: 5,
     min: 0,

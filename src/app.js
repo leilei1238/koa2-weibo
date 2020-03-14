@@ -8,12 +8,19 @@ const logger = require('koa-logger')
 const koaStatic = require('koa-static')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+const { isProd } = require('./utils/env')
 
+//路由
 const index = require('./routes/index')
 const users = require('./routes/users')
+const errorViewRouter = require('./routes/view/error')
 
 // error handler：页面显示
-onerror(app)
+let onerrorConf = {}
+if (isProd) {
+  onerrorConf = { redirect: '/error' }
+}
+onerror(app, onerrorConf)
 
 //session 配置
 const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
@@ -52,6 +59,7 @@ app.use(
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) //它一定放路由最后
 
 // error-handling:打印到控制台
 app.on('error', (err, ctx) => {
