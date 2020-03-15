@@ -48,7 +48,22 @@ const createUser = async ({ userName, password, gender = 3, nickName }) => {
   return res.dataValues
 }
 
+/**
+ *  删除当初用户
+ * @param {string} userName
+ */
+const deleteUser = async userName => {
+  const res = await User.destroy({
+    where: {
+      userName
+    }
+  })
+  //res 返回删除的行数
+  return res > 0
+}
+
 module.exports = {
   getUserInfo,
-  createUser
+  createUser,
+  deleteUser
 }
