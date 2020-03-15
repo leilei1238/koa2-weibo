@@ -9,12 +9,14 @@ const koaStatic = require('koa-static')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const { isProd } = require('./utils/env')
+const path = require('path')
 
 //路由
 const index = require('./routes/index')
 const errorViewRouter = require('./routes/view/error')
 const userViewRouter = require('./routes/view/user.js')
 const userApiRouter = require('./routes/api/user')
+const utilsApiRouter = require('./routes/api/utils')
 
 // error handler：页面显示
 let onerrorConf = {}
@@ -49,7 +51,8 @@ app.use(
 )
 app.use(json())
 app.use(logger())
-app.use(koaStatic(__dirname + '/public'))
+app.use(koaStatic(path.join(__dirname, 'public')))
+app.use(koaStatic(path.join(__dirname, '..', 'uploadFiles')))
 
 app.use(
   views(__dirname + '/views', {
@@ -61,6 +64,7 @@ app.use(
 app.use(index.routes(), index.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods())
+app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods())
 
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) //它一定放路由最后
 
