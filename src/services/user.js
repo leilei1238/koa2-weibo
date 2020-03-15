@@ -25,12 +25,30 @@ const getUserInfo = async (userName, password) => {
   if (res == null) {
     return res
   }
-  console.log('res', res.dataValues)
   //格式化处理
   const formatRes = formatUser(res.dataValues)
   return formatRes
 }
 
+/**
+ * 创建用户
+ * @param {string} userName
+ * @param {string} password
+ * @param {number} gender
+ * @param {string} nickName
+ */
+const createUser = async ({ userName, password, gender = 3, nickName }) => {
+  //创建用户
+  const res = await User.create({
+    userName,
+    password,
+    gender,
+    nickName: nickName ? nickName : userName
+  })
+  return res.dataValues
+}
+
 module.exports = {
-  getUserInfo
+  getUserInfo,
+  createUser
 }

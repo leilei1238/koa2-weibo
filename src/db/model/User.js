@@ -34,7 +34,6 @@ const User = seq.define('user', {
   },
   city: {
     type: STRING,
-    allowNull: false,
     comments: '昵称'
   }
 })
