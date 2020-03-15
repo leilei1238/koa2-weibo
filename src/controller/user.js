@@ -8,7 +8,8 @@ const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const {
   registerUserNameExistInfo,
   registerUserNameNotExistInfo,
-  registerFailInfo
+  registerFailInfo,
+  loginFailInfo
 } = require('../model/ErrorInfo')
 /**
  * 用户名是否存在
@@ -47,7 +48,25 @@ const register = async ({ userName, password, gender }) => {
   }
 }
 
+/**
+ * 用户登录
+ * @param {Object} ctx
+ * @param {string} userName
+ * @param {string} password
+ */
+const login = async (ctx, { userName, password }) => {
+  password = doCrypto(password)
+  const userInfo = await getUserInfo(userName, password)
+  if (!userInfo) {
+    return new ErrorModel(loginFailInfo)
+  }
+  //登录成功：userInfo放入session
+  ctx.session.userInfo = userInfo
+  return new SuccessModel()
+}
+
 module.exports = {
   isExist,
-  register
+  register,
+  login
 }
