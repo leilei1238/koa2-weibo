@@ -12,8 +12,9 @@ const { isProd } = require('./utils/env')
 
 //路由
 const index = require('./routes/index')
-const users = require('./routes/users')
 const errorViewRouter = require('./routes/view/error')
+const userViewRouter = require('./routes/view/user.js')
+const userApiRouter = require('./routes/api/user')
 
 // error handler：页面显示
 let onerrorConf = {}
@@ -58,7 +59,9 @@ app.use(
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(userApiRouter.routes(), userApiRouter.allowedMethods())
+
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) //它一定放路由最后
 
 // error-handling:打印到控制台

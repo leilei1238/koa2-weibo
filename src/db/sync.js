@@ -3,7 +3,7 @@
  */
 const seq = require('./seq')
 
-//require('./model') //在seq上定义了哪些schema
+require('./model') //在seq上定义了哪些schema
 
 //同步model到mysql
 seq
