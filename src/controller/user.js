@@ -70,12 +70,11 @@ const login = async (ctx, { userName, password }) => {
  * @param {Object} ctx
  * @param {string} userName
  */
-const deleteCurUser = async (ctx, userName) => {
+const deleteCurUser = async userName => {
   //services
   const res = await deleteUser(userName)
   if (res) {
     //成功
-    delete ctx.session.userInfo
     return new SuccessModel()
   }
   return new ErrorModel(deleteUserFailInfo)

@@ -43,7 +43,7 @@ router.post('/delete', loginCheck, async (ctx, next) => {
     //测试环境下，测试账号登录之后，删除自己--避免测试数据污染数据库
     const { userName } = ctx.session.userInfo
     //controller
-    ctx.body = await deleteCurUser(ctx, userName)
+    ctx.body = await deleteCurUser(userName)
   }
 })
 
