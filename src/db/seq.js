@@ -20,7 +20,7 @@ if (isProd) {
 }
 //单元测试时，不让sql打印sql语句
 if (isTest) {
-  config.logging = () => {}
+  conf.logging = () => {}
 }
 //创建实例
 const seq = new Sequelize(database, user, password, conf)
