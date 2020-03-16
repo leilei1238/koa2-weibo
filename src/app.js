@@ -12,11 +12,11 @@ const { isProd } = require('./utils/env')
 const path = require('path')
 
 //路由
-const index = require('./routes/index')
 const errorViewRouter = require('./routes/view/error')
 const userViewRouter = require('./routes/view/user.js')
 const userApiRouter = require('./routes/api/user')
 const utilsApiRouter = require('./routes/api/utils')
+const blogViewRouter = require('./routes/view/blog')
 
 // error handler：页面显示
 let onerrorConf = {}
@@ -61,10 +61,10 @@ app.use(
 )
 
 // routes
-app.use(index.routes(), index.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods())
 app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods())
+app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) //它一定放路由最后
 
