@@ -74,9 +74,9 @@ const updateUser = async (
   //1 拼接修改内容
   let updateData = {}
   if (newNickName) updateData.nickName = newNickName
-  if (newCity) updateData.city = newNickName
-  if (newPicture) updateData.picture = newNickName
-  if (newPassword) updateData.password = newNickName
+  if (newCity) updateData.city = newCity
+  if (newPicture) updateData.picture = newPicture
+  if (newPassword) updateData.password = newPassword
   //2 拼接查询条件
   let whereOpt = { userName }
   if (password) {
