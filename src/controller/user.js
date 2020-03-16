@@ -3,14 +3,20 @@
  */
 
 const doCrypto = require('../utils/cryp')
-const { getUserInfo, createUser, deleteUser } = require('../services/user')
+const {
+  getUserInfo,
+  createUser,
+  deleteUser,
+  updateUser
+} = require('../services/user')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const {
   registerUserNameExistInfo,
   registerUserNameNotExistInfo,
   registerFailInfo,
   loginFailInfo,
-  deleteUserFailInfo
+  deleteUserFailInfo,
+  changeInfoFailInfo
 } = require('../model/ErrorInfo')
 /**
  * 用户名是否存在
@@ -80,9 +86,36 @@ const deleteCurUser = async userName => {
   return new ErrorModel(deleteUserFailInfo)
 }
 
+/**
+ * 修改用户信息
+ * @param {string} nickName
+ * @param {string} city
+ * @param {string} picture
+ */
+const changeInfo = async (ctx, { nickName, city, picture }) => {
+  const { userName } = ctx.session.userInfo
+  //services
+  const res = await updateUser(
+    {
+      newNickName: nickName,
+      newCity: city,
+      newPicture: picture
+    },
+    { userName }
+  )
+  if (!res) {
+    //修改失败
+    return new ErrorModel(changeInfoFailInfo)
+  }
+  //修改成功
+  Object.assign(ctx.session.userInfo, { nickName, city, picture })
+  return new SuccessModel()
+}
+
 module.exports = {
   isExist,
   register,
   login,
-  deleteCurUser
+  deleteCurUser,
+  changeInfo
 }
