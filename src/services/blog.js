@@ -49,7 +49,6 @@ const getBlogListByUser = async ({
       }
     ]
   })
-  console.log(res)
   const blogList = res.rows.map(blog => blog.dataValues)
   blogList.forEach(item => {
     item.user = formatUser(item.user.dataValues)
