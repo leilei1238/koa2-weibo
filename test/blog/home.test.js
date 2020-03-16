@@ -26,3 +26,12 @@ test('创建一条微博,应该成功', async () => {
   //记录微博id
   BLOG_ID = res.body.data.id
 })
+
+//删除测试微博
+test('删除污染数据库的测试微博,应该成功', async () => {
+  const res = await server
+    .post('/api/blog/delBlog')
+    .send({ id: BLOG_ID })
+    .set('cookie', COOKIE)
+  expect(res.body.errno).toBe(0)
+})

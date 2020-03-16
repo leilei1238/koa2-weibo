@@ -6,7 +6,8 @@ const router = require('koa-router')()
 const { loginCheck } = require('../../middlewares/loginChecks')
 const genValidator = require('../../middlewares/validator')
 const blogValidate = require('../../validator/blog')
-const { create } = require('../../controller/blog-home')
+const { create, delBlog } = require('../../controller/blog-home')
+const { isTest } = require('../../utils/env')
 
 router.prefix('/api/blog')
 
@@ -22,5 +23,13 @@ router.post(
     ctx.body = await create({ userId, content, image })
   }
 )
+//删除微博：仅在test环境下删除
+router.post('/delBlog', loginCheck, async (ctx, next) => {
+  if (isTest) {
+    const { id } = ctx.request.body
+    //controller
+    ctx.body = await delBlog(id)
+  }
+})
 
 module.exports = router

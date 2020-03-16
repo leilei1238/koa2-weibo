@@ -2,9 +2,9 @@
  * @description blog-home controller
  */
 
-const { createBlog } = require('../services/blog')
+const { createBlog, deleteBlog } = require('../services/blog')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
-const { createBlogFailInfo } = require('../model/ErrorInfo')
+const { createBlogFailInfo, deleteBlogFailInfo } = require('../model/ErrorInfo')
 const xss = require('xss')
 
 /**
@@ -22,6 +22,19 @@ const create = async ({ userId, content, image }) => {
   }
 }
 
+/**
+ * 删除测试微博
+ * @param {number} id 微博ID
+ */
+const delBlog = async id => {
+  const res = await deleteBlog(id)
+  if (res) {
+    return new SuccessModel()
+  }
+  return new ErrorModel(deleteBlogFailInfo)
+}
+
 module.exports = {
-  create
+  create,
+  delBlog
 }
