@@ -9,6 +9,6 @@
 module.exports = {
   //张三的cookie
   COOKIE:
-    'weibo.sid=xAglm1fVNiAsAS4Z5iDHg58hJ3exxVm6; weibo.sid.sig=C6WwD4J5yqZPMk357R89jMOGqiU',
+    'weibo.sid=l9S-8Eauh5P4ZTwZHSQuMUIBmfS-SS-s; weibo.sid.sig=q5A-AnoPSiwUvRCCYNHq3BWrDyA',
   USER_NAME: 'zhangsan'
 }

@@ -10,7 +10,7 @@ const { PAGE_SIZE } = require('../conf/constant')
  * @param {string} userName
  * @param {number} pageIndex
  */
-const getProfileBlogList = async (userName, pageIndex = 0) => {
+const getProfileBlogList = async ({ userName, pageIndex = 0 }) => {
   //services
   const { count, blogList } = await getBlogListByUser({
     userName,
