@@ -39,7 +39,10 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
     curUserInfo = existResult.data
   }
   //获取微博第一页数据
-  const result = await getProfileBlogList({ curUserName, pageIndex: 0 })
+  const result = await getProfileBlogList({
+    userName: curUserName,
+    pageIndex: 0
+  })
   const { count, pageSize, pageIndex, blogList, isEmpty } = result.data
   await ctx.render('profile', {
     blogData: { count, pageSize, pageIndex, blogList, isEmpty },
