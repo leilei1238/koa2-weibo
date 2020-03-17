@@ -17,6 +17,11 @@ UserRelation.belongsTo(User, {
 User.hasMany(UserRelation, {
   foreignKey: 'userId'
 })
+//连表：Blog与UserRelation 注：虽然sql表上看不出，但可以sequelize操作
+Blog.belongsTo(UserRelation, {
+  foreignKey: 'userId',
+  targetKey: 'followerId'
+})
 
 module.exports = {
   User,
