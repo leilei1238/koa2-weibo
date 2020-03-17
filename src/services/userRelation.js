@@ -29,6 +29,32 @@ const getUsersByFollower = async followerId => {
   }
 }
 
+/**
+ * 添加关注关系
+ * @param {number} curUserId  要被关注的用户
+ * @param {number} myUserId 当前登录的用户
+ */
+const addFollower = async ({ followerId, userId }) => {
+  const res = await UserRelation.create({
+    followerId,
+    userId
+  })
+  return res.dataValues
+}
+
+const deleteFollower = async ({ followerId, userId }) => {
+  const res = await UserRelation.destroy({
+    where: {
+      followerId,
+      userId
+    }
+  })
+  //res 是删除的行数
+  return res > 0
+}
+
 module.exports = {
-  getUsersByFollower
+  getUsersByFollower,
+  addFollower,
+  deleteFollower
 }
