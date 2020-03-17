@@ -77,7 +77,7 @@ const unFollow = async ({ curUserId, myUserId }) => {
 
 module.exports = {
   getFans,
+  getFollowers,
   follow,
-  unFollow,
-  getFollowers
+  unFollow
 }
