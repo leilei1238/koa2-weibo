@@ -2,9 +2,14 @@
  * @description blog-home controller
  */
 
-const { createBlog, deleteBlog } = require('../services/blog')
+const {
+  createBlog,
+  deleteBlog,
+  getBlogListByFollowers
+} = require('../services/blog')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { createBlogFailInfo, deleteBlogFailInfo } = require('../model/ErrorInfo')
+const { PAGE_SIZE } = require('../conf/constant')
 const xss = require('xss')
 
 /**
@@ -34,7 +39,30 @@ const delBlog = async id => {
   return new ErrorModel(deleteBlogFailInfo)
 }
 
+/**
+ * 获取首页微博列表
+ * @param {Object} 获取首页需要的参数 { userId, pageIndex = 0}
+ */
+const getHomeBlogList = async ({ userId, pageIndex = 0 }) => {
+  //services
+  const { count, blogList } = await getBlogListByFollowers({
+    userId,
+    pageIndex,
+    pageSize: PAGE_SIZE
+  })
+
+  //拼接返回数据
+  return new SuccessModel({
+    count,
+    pageSize: PAGE_SIZE,
+    pageIndex,
+    blogList,
+    isEmpty: blogList.length === 0
+  })
+}
+
 module.exports = {
   create,
-  delBlog
+  delBlog,
+  getHomeBlogList
 }

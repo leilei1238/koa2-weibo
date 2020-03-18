@@ -2,8 +2,8 @@
  * @description blog services
  */
 
-const { Blog, User } = require('../db/model')
-const { formatUser } = require('./_format.js')
+const { Blog, User, UserRelation } = require('../db/model')
+const { formatUser, formatBlog } = require('./_format.js')
 
 /**
  * 创建微博
@@ -49,7 +49,8 @@ const getBlogListByUser = async ({
       }
     ]
   })
-  const blogList = res.rows.map(blog => blog.dataValues)
+  let blogList = res.rows.map(blog => blog.dataValues)
+  blogList = formatBlog(blogList)
   blogList.forEach(item => {
     item.user = formatUser(item.user.dataValues)
   })
@@ -66,8 +67,49 @@ const deleteBlog = async id => {
   return res > 0
 }
 
+/**
+ * 获取关注者的微博 三表查询 uid->fid->fids的blog
+ * @param {Object} 获取首页微博的参数 { userId, pageIndex=0, pageSize=10}
+ */
+const getBlogListByFollowers = async ({
+  userId,
+  pageIndex = 0,
+  pageSize = 10
+}) => {
+  const res = await Blog.findAndCountAll({
+    limit: pageSize, //每页多少条
+    offset: pageSize * pageIndex, //跳过多少条
+    order: [['id', 'desc']],
+    include: [
+      {
+        //连User：知道每天微博创建人的info
+        model: User,
+        attributes: ['userName', 'nickName', 'city', 'picture', 'id']
+      },
+      {
+        //连UserRL：知道followerId,然后知道followerID的blog和userInfo
+        model: UserRelation,
+        attributes: ['followerId', 'userId'],
+        where: { userId }
+      }
+    ]
+  })
+
+  let blogList = res.rows.map(blog => blog.dataValues)
+  blogList = formatBlog(blogList)
+  blogList.forEach(item => {
+    item.user = formatUser(item.user.dataValues)
+  })
+  console.log(blogList)
+  return {
+    count: res.count,
+    blogList
+  }
+}
+
 module.exports = {
   createBlog,
   getBlogListByUser,
-  deleteBlog
+  deleteBlog,
+  getBlogListByFollowers
 }
