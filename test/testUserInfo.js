@@ -13,6 +13,6 @@ module.exports = {
   Z_USER_NAME: 'zhangsan',
   L_ID: 2,
   L_COOKIE:
-    'weibo.sid=w8jUuKiTz1QD9hNmvMqzPaBAzR2-cP5e; weibo.sid.sig=QnfWIOqDArTLO0ockYQbrc1GfYs',
+    'weibo.sid=9UAGfuB2r3V3JwTWS221w5Eup6KnUmGW; weibo.sid.sig=aSEQH5Lk8PRB3880Dff8p2YACY8',
   L_USER_NAME: 'lisi'
 }
