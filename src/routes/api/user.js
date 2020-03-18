@@ -16,6 +16,7 @@ const {
   changePassword,
   logout
 } = require('../../controller/user')
+const { getFollowers } = require('../../controller/user-relation')
 
 router.prefix('/api/user')
 
@@ -73,5 +74,15 @@ router.patch('/changePassword', async (ctx, next) => {
 router.post('/logout', loginCheck, async (ctx, next) => {
   //controller
   ctx.body = await logout(ctx)
+})
+
+//获取@列表，即关注人列表
+router.get('/getAtList', loginCheck, async (ctx, next) => {
+  const { id: userId } = ctx.session.userInfo
+  const res = await getFollowers(userId)
+  const { followerList } = res.data
+  const list = followerList.map(user => `${user.nickName}-${user.userName}`)
+  //格式如：['昵称-userName']
+  ctx.body = list
 })
 module.exports = router
