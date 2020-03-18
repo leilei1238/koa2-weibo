@@ -3,7 +3,8 @@
  */
 const {
   getAtRelationCount,
-  getAtUserBlogList
+  getAtUserBlogList,
+  updateAtRelation
 } = require('../services/atRelation')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { PAGE_SIZE } = require('../conf/constant')
@@ -37,7 +38,22 @@ const getAtMeBlogList = async ({ userId, pageIndex }) => {
   })
 }
 
+/**
+ * 标记为已读
+ * @param {number} userId
+ */
+const markAsRead = async userId => {
+  //services
+  try {
+    await updateAtRelation({ newIsRead: true }, { userId, isRead: false })
+  } catch (ex) {
+    console.error(ex.message, ex.stack)
+  }
+  //注：不需要返回任何结果，因为他在render后执行，前端接收不到
+}
+
 module.exports = {
   getAtMeCount,
-  getAtMeBlogList
+  getAtMeBlogList,
+  markAsRead
 }
