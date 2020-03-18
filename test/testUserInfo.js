@@ -9,7 +9,7 @@
 module.exports = {
   Z_ID: 1,
   Z_COOKIE:
-    'weibo.sid=8Yqk_Kmp3Y5o6Y2_zE_su5URkzf2Xo1P; weibo.sid.sig=J9AYtg0FoMVdQ9JwjLus4uha0JA',
+    'weibo.sid=RXex7Lm3QGFmsiui7mVSVwj3Hq0npt_d; weibo.sid.sig=ku6SOpUSv8yFPPKKeSuy69l45eo',
   Z_USER_NAME: 'zhangsan',
   L_ID: 2,
   L_COOKIE:
