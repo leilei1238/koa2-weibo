@@ -1,7 +1,7 @@
 /**
  * @description atRelation services
  */
-const { Blog, User, AtRelation } = require('../db/model')
+const { Blog, AtRelation } = require('../db/model')
 const { formatUser, formatBlog } = require('./_format.js')
 
 /**
@@ -17,6 +17,21 @@ const createAtRelation = async (blogId, userId) => {
   return res.dataValues
 }
 
+/**
+ * 获取 @用户 的微博数量 (未读的)
+ * @param {number} userId
+ */
+const getAtRelationCount = async userId => {
+  const res = await AtRelation.findAndCountAll({
+    where: {
+      userId,
+      isRead: false
+    }
+  })
+  return res.count
+}
+
 module.exports = {
-  createAtRelation
+  createAtRelation,
+  getAtRelationCount
 }
