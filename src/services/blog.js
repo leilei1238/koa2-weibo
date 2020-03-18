@@ -100,7 +100,6 @@ const getBlogListByFollowers = async ({
   blogList.forEach(item => {
     item.user = formatUser(item.user.dataValues)
   })
-  console.log(blogList)
   return {
     count: res.count,
     blogList

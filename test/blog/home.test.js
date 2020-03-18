@@ -27,6 +27,17 @@ test('创建一条微博,应该成功', async () => {
   BLOG_ID = res.body.data.id
 })
 
+//测试微博首页 第一页
+test('测试微博首页第一页，应该成功', async () => {
+  const res = await server.get(`/api/blog/loadMore/0`).set('cookie', Z_COOKIE)
+  expect(res.body.errno).toBe(0)
+  expect(res.body.data).toHaveProperty('count')
+  expect(res.body.data).toHaveProperty('pageSize')
+  expect(res.body.data).toHaveProperty('pageIndex')
+  expect(res.body.data).toHaveProperty('blogList')
+  expect(res.body.data).toHaveProperty('isEmpty')
+})
+
 //删除测试微博
 test('删除污染数据库的测试微博,应该成功', async () => {
   const res = await server
