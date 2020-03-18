@@ -20,6 +20,7 @@ const utilsApiRouter = require('./routes/api/utils')
 const homeApiRouter = require('./routes/api/blog-home')
 const profileApiRouter = require('./routes/api/blog-profile')
 const squareApiRouter = require('./routes/api/blog-square')
+const atApiRouter = require('./routes/api/blog-at')
 
 // error handler：页面显示
 let onerrorConf = {}
@@ -71,6 +72,7 @@ app.use(blogViewRouter.routes(), blogViewRouter.allowedMethods())
 app.use(homeApiRouter.routes(), homeApiRouter.allowedMethods())
 app.use(profileApiRouter.routes(), profileApiRouter.allowedMethods())
 app.use(squareApiRouter.routes(), squareApiRouter.allowedMethods())
+app.use(atApiRouter.routes(), atApiRouter.allowedMethods())
 
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) //它一定放路由最后
 
